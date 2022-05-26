@@ -1,0 +1,344 @@
+<html>
+<head>
+<title>Austin's Guessing Game</title>
+    <style>
+        body {
+            background-color:antiquewhite;
+        }
+        h1 {
+            color:brown;
+            font-size:125%;
+        }
+        h3 {
+            font-size:50%;
+        }
+    </style>
+<script type = "text/javascript">
+
+    //Formatting Variable Declaration
+var BR = "<br />";
+var ES = "";
+var gameRetry;
+    
+    //Randomly Generates Hints Based on Difficulty
+function gameHint(diff) {
+    if (diff == 1) {
+        hintRange = Math.floor(Math.random() * 10);    //Generate number between 1-10
+        hintLow = correctNum - hintRange;   //Set low range for hint
+        hintHigh = correctNum + 3;  //Set high range for hint
+        alert("Hint: number is between " + hintLow + " and " + hintHigh + ".");    //Display hint
+    } else if (diff == 2) {
+        hintRange = Math.floor(Math.random() * 10);    //Generate number between 1-10
+        hintLow = correctNum - hintRange;   //Set low range for hint
+        hintHigh = correctNum + 10;    //Set high range for hint
+        alert("Hint: number is between " + hintLow + " and " + hintHigh + ".");    //Display hint
+    } else if (diff == 3) {
+        hintRange = Math.floor(Math.random() * 10);     //Generate number between 1-10
+        hintRange2 = Math.floor(Math.random() * 10);    //Generate second number between 1-10
+        hintLow = correctNum - hintRange;   //Use first number for low hint range
+        hintHigh = correctNum + hintRange2;    //Use second number for high hint range
+        alert("Hint: number is between " + hintLow + " and " + hintHigh + ".");    //Display hint
+    }
+}   
+    //Catches Invalid Character Input
+function invalidCharacter(diff) {
+    if (diff == 1) {
+        alert("You did not enter a valid number.");    //Display error
+        levelOneRetry();    //Run levelOneRetry
+    } else if (diff == 2) {
+        alert("You did not enter a valid number.");    //Display error 
+        levelTwoRetry();    //Run levelTwoRetry
+    }
+    else if (diff == 3) {
+        alert("You did not enter a valid number.");    //Display error
+        levelThreeRetry();  //Run levelThreeRetry
+    }
+}    //End of invalidCharacter function
+    
+correctNum1 = Math.floor(Math.random() * 10);    //Create random number between 1-10 for answer	
+	
+    //First Difficulty, Number between 1-10
+function firstDifficulty() {
+    
+		diff = 1;
+    var num1;
+        num1 = prompt("Enter a number between 1 and 10:",ES);   //Prompt for number choice
+            if (num1 < correctNum1) {    //If number entered is lower than correct number
+               //document.write("" + BR);  //Display error
+                gameRetry = prompt("The number entered is too low. Would you like to try again? \(Y/N\)"); //Prompt for retry
+                gameRetry = gameRetry.toUpperCase();    //Shift prompt input to uppercase
+                if (gameRetry == "Y") {    //If user says yes to retry
+                    firstDifficulty();    //Run levelOneRetry;
+                } else if (gameRetry == "H") {     //If user wants a hint
+                    gameHint(diff);   //Create hint based on difficulty
+                    firstDifficulty();    //Run levelOneRetry
+                } else if (gameRetry == "N") {    //If user does not want to retry
+                    document.write("Thank you for using this program. Goodbye!" + BR);
+                } else { 
+                    alert("You entered an invalid character.");
+                    firstDifficulty();
+                }
+            } else if (num1 > correctNum) {
+                //document.write("" + BR);
+                gameRetry = prompt("The number entered is too high. Would you like to try again? \(Y/N\)");
+                gameRetry = gameRetry.toUpperCase();
+                if (gameRetry == "Y") {
+                    firstDifficulty();
+                } else if (gameRetry == "H") {
+                    gameHint(diff);
+                    firstDifficulty();
+                } else if (gameRetry == "N") {
+                    document.write("Thank you for using this program. Goodbye!" + BR);
+                } else { 
+                    alert("You entered an invalid character.");
+                    firstDifficulty();
+                }
+            } else if (num1 == correctNum) {
+                alert("Your guess was correct! The number was " + correctNum + ".");
+                document.write("Thank you for using this program. Goodbye!" + BR);
+            } else {
+                invalidCharacter(diff);
+            }
+}
+    //Function for Level 1 Retry
+function levelOneRetry() {
+    num1 = prompt("Enter a number between 1 and 10:",ES);
+            if (num1 < correctNum) {
+                document.write("The number entered is too low." + BR);
+                gameRetry = prompt("Would you like to try again? \(Y/N\)"); 
+                gameRetry = gameRetry.toUpperCase();
+                if (gameRetry == "Y") {
+                    levelOneRetry();
+                } else if (gameRetry == "H") {      
+                    diff = 1;
+                    gameHint(diff);
+                    levelOneRetry();
+                } else if (gameRetry == "N") {
+                    document.write("Thank you for using this program. Goodbye!" + BR);
+                } else { 
+                    alert("You entered an invalid character.");
+                    levelOneRetry();
+                }
+            } else if (num1 > correctNum) {
+                document.write("The number entered is too high." + BR);
+                gameRetry = prompt("Would you like to try again? \(Y/N\)");
+                gameRetry = gameRetry.toUpperCase();
+                if (gameRetry == "Y") {
+                    levelOneRetry();
+                } else if (gameRetry == "H") {
+                    diff = 1;
+                    gameHint(diff);
+                    levelOneRetry();
+                } else if (gameRetry == "N") {
+                    document.write("Thank you for using this program. Goodbye!" + BR);
+                } else { 
+                    alert("You entered an invalid character.");
+                    levelOneRetry();
+                }
+            } else if (num1 == correctNum) {
+                alert("Your guess was correct! The number was " + correctNum + ".");
+                document.write("Thank you for using this program. Goodbye!" + BR);
+                } else {
+                    diff = 1;
+                    invalidCharacter(diff);
+                }
+}
+    
+    //Second Difficult, Number between 1-100
+function secondDifficulty() {
+    correctNum = Math.floor(Math.random() * 100);
+   var num1;
+        num1 = prompt("Enter a number between 1 and 100:",ES);
+            if (num1 < correctNum) {
+                document.write("The number entered is too low." + BR);
+                gameRetry = prompt("Would you like to try again? \(Y/N\)");
+                gameRetry = gameRetry.toUpperCase();
+                if (gameRetry == "Y") {
+                    levelTwoRetry();
+                } else if (gameRetry == "H") {
+                    diff = 2;
+                    gameHint(diff);
+                    levelTwoRetry();
+                } else if (gameRetry == "N") {
+                    document.write("Thank you for using this program. Goodbye!" + BR);
+                } else { 
+                    alert("You entered an invalid character.");
+                    levelTwoRetry();
+		}
+            } else if (num1 > correctNum) {
+                document.write("The number entered is too high." + BR);
+                gameRetry = prompt("Would you like to try again? \(Y/N\)");
+                gameRetry = gameRetry.toUpperCase();
+                if (gameRetry == "Y") {
+                    levelTwoRetry();
+                } else if (gameRetry == "H") {
+                    diff = 2;
+                    gameHint(diff);
+                    levelTwoRetry();
+                } else if (gameRetry == "N") {
+                    document.write("Thank you for using this program. Goodbye!" + BR);
+                } else { 
+                    alert("You entered an invalid character.");
+                    levelTwoRetry();
+                }
+            } else if (num1 == correctNum) {
+                alert("Your guess was correct! The number was " + correctNum + ".");
+                document.write("Thank you for using this program. Goodbye!" + BR);
+                } else {
+                    diff = 2;
+                    invalidCharacter(diff);
+                }
+}
+    
+    //Function for Level 2 Retry
+function levelTwoRetry() {
+    num1 = prompt("Enter a number between 1 and 100:",ES);
+            if (num1 < correctNum) {
+                document.write("The number entered is too low." + BR);
+                gameRetry = prompt("Would you like to try again? \(Y/N\)");
+                gameRetry = gameRetry.toUpperCase();
+                if (gameRetry == "Y") {
+                    levelTwoRetry();
+                } else if (gameRetry == "H") {
+                    diff = 2;
+                    gameHint(diff);
+                    levelTwoRetry();
+                } else if (gameRetry == "N") {
+                    document.write("Thank you for using this program. Goodbye!" + BR);
+                } else { 
+                    alert("You entered an invalid character.");
+                    levelTwoRetry();
+                }
+            } else if (num1 > correctNum) {
+                document.write("The number entered is too high." + BR);
+                gameRetry = prompt("Would you like to try again? \(Y/N\)");
+                gameRetry = gameRetry.toUpperCase();
+                if (gameRetry == "Y") {
+                    levelTwoRetry();
+                } else if (gameRetry == "H") {
+                    diff = 2;
+                    gameHint(diff);
+                    levelTwoRetry();
+                } else if (gameRetry == "N") {
+                    document.write("Thank you for using this program. Goodbye!" + BR);
+                } else { 
+                    alert("You entered an invalid character.");
+                    levelTwoRetry();
+                }
+            } else if (num1 == correctNum) {
+                alert("Your guess was correct! The number was " + correctNum + ".");
+                document.write("Thank you for using this program. Goodbye!" + BR);
+                } else {
+                    diff = 2;
+                    invalidCharacter(diff);
+                }
+}
+    
+  //Third Difficulty, Number between 1-1000  
+function thirdDifficulty() {
+    correctNum = Math.floor(Math.random() * 1000);
+    var num1;
+        num1 = prompt("Enter a number between 1 and 1000:",ES);
+            if (num1 < correctNum) {
+                document.write("The number entered is too low." + BR);
+                gameRetry = prompt("Would you like to try again? \(Y/N\)");
+                gameRetry = gameRetry.toUpperCase();
+                if (gameRetry == "Y") {
+                    levelThreeRetry();
+                } else if (gameRetry == "H") {
+                    diff = 3;
+                    gameHint(diff);
+                    levelThreeRetry();
+                } else if (gameRetry == "N") {
+                    document.write("Thank you for using this program. Goodbye!" + BR);
+                } else { 
+                    alert("You entered an invalid character.");
+                    levelThreeRetry();
+                }
+            } else if (num1 > correctNum) {
+                document.write("The number entered is too high." + BR);
+                gameRetry = prompt("Would you like to try again? \(Y/N\)");
+                gameRetry = gameRetry.toUpperCase();
+                if (gameRetry == "Y") {
+                    levelThreeRetry();
+                } else if (gameRetry == "H") {
+                    diff = 3;
+                    gameHint(diff);
+                    levelThreeRetry();
+                } else if (gameRetry == "N") {
+                    document.write("Thank you for using this program. Goodbye!" + BR);
+                } else { 
+                    alert("You entered an invalid character.");
+                    levelThreeRetry();
+                }
+            } else if (num1 == correctNum) {
+                alert("Your guess was correct! The number was " + correctNum + ".");
+                document.write("Thank you for using this program. Goodbye!" + BR);
+                } else {
+                    diff = 3;
+                    invalidCharacter(diff);
+                }
+}  
+
+    //Function for Level 3 Retry
+function levelThreeRetry() {
+   num1 = prompt("Enter a number between 1 and 1000:",ES);
+            if (num1 < correctNum) {
+                document.write("The number entered is too low." + BR);
+                gameRetry = prompt("Would you like to try again? \(Y/N\)");
+                gameRetry = gameRetry.toUpperCase();
+                if (gameRetry == "Y") {
+                    levelThreeRetry();
+                } else if (gameRetry == "H") {
+                    diff = 3;
+                    gameHint(diff);
+                    levelThreeRetry();
+                } else if (gameRetry == "N") {
+                    document.write("Thank you for using this program. Goodbye!" + BR);
+                } else { 
+                    alert("You entered an invalid character.");
+                    levelThreeRetry();
+                }
+            } else if (num1 > correctNum) {
+                document.write("The number entered is too high." + BR);
+                gameRetry = prompt("Would you like to try again? \(Y/N\)");
+                gameRetry = gameRetry.toUpperCase();
+                if (gameRetry == "Y") {
+                    levelThreeRetry();
+                } else if (gameRetry == "H") {
+                    diff = 3;
+                    gameHint(diff);
+                    levelThreeRetry();
+                } else if (gameRetry == "N") {
+                    document.write("Thank you for using this program. Goodbye!" + BR);
+                } else { 
+                    alert("You entered an invalid character.");
+                    levelThreeRetry();
+                }
+            } else if (num1 == correctNum) {
+                alert("Your guess was correct! The number was " + correctNum + ".");
+                document.write("Thank you for using this program. Goodbye!" + BR);
+                } else {
+                    diff = 3;
+                    invalidCharacter(diff);
+                }
+}
+
+
+</script>
+</head>
+<body>
+    <h1>Random Number Game</h1>
+    <p1>Please select a difficulty.</p1>
+    <h3>*Enter H for a Hint on Retry prompt*</h3>
+    <button onclick="firstDifficulty()">Difficulty Level 1</button><br />
+    <button onclick="secondDifficulty()">Difficulty Level 2</button><br />
+    <button onclick="thirdDifficulty()">Difficulty Level 3</button><br />
+<script type = "text/javascript">
+
+var more = "Y";
+var BR = "<br />";
+    
+</script>
+</body>
+</html>
